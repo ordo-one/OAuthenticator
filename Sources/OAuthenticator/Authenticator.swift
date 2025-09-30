@@ -30,7 +30,7 @@ public enum AuthenticatorError: Error, Hashable {
 /// Manage state required to executed authenticated URLRequests.
 public actor Authenticator {
 	public typealias UserAuthenticator = @Sendable (URL, String) async throws -> URL
-    public typealias AuthenticationStatusHandler = (Result<Login, AuthenticatorError>) -> Void
+    public typealias AuthenticationStatusHandler = @Sendable (Result<Login, AuthenticatorError>) -> Void
     
 	/// A `UserAuthenticator` that always fails. Useful as a placeholder
 	/// for testing and for doing manual authentication with an external
@@ -64,7 +64,7 @@ public actor Authenticator {
 		}
 	}
 
-	public struct Configuration {
+	public struct Configuration: Sendable {
 		public let appCredentials: AppCredentials
 
 		public let loginStorage: LoginStorage?
@@ -103,8 +103,7 @@ public actor Authenticator {
 			tokenHandling: TokenHandling,
 			mode: UserAuthenticationMode = .automatic,
 			userAuthenticator: @escaping UserAuthenticator,
-			authenticationStatusHandler: AuthenticationStatusHandler? = nil,
-			_ isolation: isolated (any Actor)? = #isolation
+			authenticationStatusHandler: AuthenticationStatusHandler? = nil
 		) {
 			self.appCredentials = appCredentials
 			self.loginStorage = loginStorage
