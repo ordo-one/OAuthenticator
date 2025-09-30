@@ -103,7 +103,8 @@ public actor Authenticator {
 			tokenHandling: TokenHandling,
 			mode: UserAuthenticationMode = .automatic,
 			userAuthenticator: @escaping UserAuthenticator,
-			authenticationStatusHandler: AuthenticationStatusHandler? = nil
+			authenticationStatusHandler: AuthenticationStatusHandler? = nil,
+			_ isolation: isolated (any Actor)? = #isolation
 		) {
 			self.appCredentials = appCredentials
 			self.loginStorage = loginStorage
