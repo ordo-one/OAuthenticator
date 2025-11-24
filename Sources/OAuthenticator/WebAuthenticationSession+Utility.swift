@@ -1,4 +1,4 @@
-#if canImport(AuthenticationServices)
+#if canImport(AuthenticationServices) && ORDO_BUILDING_IN_XCODE
 import AuthenticationServices
 import SwiftUI
 
